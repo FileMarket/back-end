@@ -48,25 +48,34 @@ class FileController extends Controller
 
     public function getAll(Request $request){
         $allfile=File::all();
-        $i=0;
         foreach ($allfile as $file) {
             $subcategory=Subcategory::where('id', $file->subcategory_id)->first();
-            $resp[$i]=[
+            $resp=[
                 'id'=>$file->id,
                 'name'=> $file->name,
-                'description'=> $file->description,
-                'price'=> $file->price,
-                'format'=> $file->format,
-                'size'=> $file->size,
-                'author'=> User::find($file->author_id)->name.' '.User::find($file->author_id)->family,
-                'subcategory'=>Subcategory::find($file->subcategory_id)->Name,
-                'category'=>Category::find($subcategory->category_id)->Name
+                'price'=> $file->price
             ];
-            $i++;
         }
         return response()->json($resp);
     }
 
+    public function getDetail(Request $request){
+        $file=File::where('id', $request->input('id'))->first();
+        $subcategory=Subcategory::where('id', $file->subcategory_id)->first();
+        $resp=[
+            'id'=>$file->id,
+            'name'=> $file->name,
+            'description'=> $file->description,
+            'price'=> $file->price,
+            'format'=> $file->format,
+            'size'=> $file->size,
+            'author_name'=> User::find($file->author_id)->name.' '.User::find($file->author_id)->family,
+            'author_email'=> User::find($file->author_id)->email,
+            'subcategory'=>Subcategory::find($file->subcategory_id)->Name,
+            'category'=>Category::find($subcategory->category_id)->Name
+        ];
+        return response()->json($resp);
+    }
 
     public function register(Request $request){
         $user=User::where('remember_token', $request->input('token'))->first();

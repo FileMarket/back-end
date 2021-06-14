@@ -25,6 +25,7 @@ Route::group([
     Route::get('file/getAll','FileController@getAll')->name('file.getAll');
     Route::post('file/register','FileController@register')->name('file.register');
     Route::get('file/checkRegister','FileController@checkRegister')->name('file.checkRegister');
+    Route::get('file/getDetail','FileController@getDetail')->name('file.getDetail');
 
     Route::get('category/getAll','CategoryController@getAll')->name('category.getAll');
 
