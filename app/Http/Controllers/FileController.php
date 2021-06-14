@@ -48,13 +48,15 @@ class FileController extends Controller
 
     public function getAll(Request $request){
         $allfile=File::all();
+        $i=0;
         foreach ($allfile as $file) {
             $subcategory=Subcategory::where('id', $file->subcategory_id)->first();
-            $resp=[
+            $resp[$i]=[
                 'id'=>$file->id,
                 'name'=> $file->name,
                 'price'=> $file->price
             ];
+            $i++;
         }
         return response()->json($resp);
     }
