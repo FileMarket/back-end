@@ -53,7 +53,7 @@ class FileController extends Controller
             $subcategory=Subcategory::where('id', $file->subcategory_id)->first();
             $resp[$i]=[
                 'id'=>$file->id,
-                'realName'=> $file->realName,
+                'name'=> $file->name,
                 'description'=> $file->description,
                 'price'=> $file->price,
                 'format'=> $file->format,
