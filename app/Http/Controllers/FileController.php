@@ -57,6 +57,12 @@ class FileController extends Controller
     public function getAll(Request $request){
         try {
             $allfile = File::all();
+            if($allfile->isEmpty()){
+                return response()->json([
+                    'code' => 204,
+                    'status' => 'Database Is Empty!'
+                ]);
+            }
             $i = 0;
             foreach ($allfile as $file) {
                 $subcategory = Subcategory::where('id', $file->subcategory_id)->first();
