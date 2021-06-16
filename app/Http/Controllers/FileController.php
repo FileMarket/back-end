@@ -9,6 +9,7 @@ use App\Category;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class FileController extends Controller
@@ -137,6 +138,33 @@ class FileController extends Controller
                     'result' => 'false',
                     'code' => 200,
                     'status' => 'OK'
+                ]);
+            }
+        } catch(Exception $ex){
+            abort(500, 'Internal Server Error!');
+        }
+    }
+
+    public function download(Request $request){
+        try {
+            $user = User::where('remember_token', $request->input('token'))->first();
+            $fileRegister = FileRegister::where('user_id', $user->id)->where('file_id', $request->input('file_id'))->first();
+            if ($fileRegister instanceof FileRegister) {
+                $file = File::where('id', $request->input('file_id'))->first();
+                $physicalName = File::find($file->id)->physicalName;
+                $name = File::find($file->id)->name;
+                //return response()->json([
+                //'physicalName' => File::find($file->id)->physicalName
+                //]);
+
+                //return Storage::download('files/'.$physicalName, $name, '');
+
+                $path = storage_path('files/'.$physicalName);
+                return Response()->download($path);
+            } else {
+                return response()->json([
+                    'code' => 404,
+                    'status' => 'Not Found!'
                 ]);
             }
         } catch(Exception $ex){
