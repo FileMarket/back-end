@@ -47,7 +47,10 @@ class FileController extends Controller
                 ]);
             }
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 
@@ -66,7 +69,10 @@ class FileController extends Controller
             }
             return response()->json($resp);
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 
@@ -88,7 +94,10 @@ class FileController extends Controller
             ];
             return response()->json($resp);
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 
@@ -99,7 +108,7 @@ class FileController extends Controller
             if ($fileRegister instanceof FileRegister){
                 return response()->json([
                     'code' => 409,
-                    'status' => 'register done'
+                    'status' => 'register done before'
                 ]);
             }
             $file = File::where('id', $request->input('file_id'))->first();
@@ -127,7 +136,10 @@ class FileController extends Controller
                 'status' => 'OK'
             ]);
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 
@@ -149,7 +161,10 @@ class FileController extends Controller
                 ]);
             }
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 
@@ -183,7 +198,10 @@ class FileController extends Controller
                 ]);
             }
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 }

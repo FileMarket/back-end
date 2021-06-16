@@ -37,7 +37,10 @@ class UserController extends Controller
                 ]);
             }
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 
@@ -61,7 +64,10 @@ class UserController extends Controller
                 ]);
             }
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 
@@ -77,7 +83,10 @@ class UserController extends Controller
                 'status' => 'OK'
             ]);
         } catch(Exception $ex){
-            abort(500, 'Internal Server Error!');
+            return response()->json([
+                'code' => 500,
+                'status' => 'Internal Server Error!'
+            ]);
         }
     }
 }
