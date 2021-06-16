@@ -9,6 +9,7 @@ use App\Category;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -17,7 +18,7 @@ class FileController extends Controller
     public function upload(Request $request){
         try {
             $user = User::where('remember_token', $request->input('token'))->first();
-            $physicalName = Str::random(30);
+            $physicalName = Str::random(30).'.'.$request->file('file')->getClientOriginalExtension();
             $new_file = [
                 'name' => $request->input('name'),
                 'physicalName' => $physicalName,
@@ -153,18 +154,25 @@ class FileController extends Controller
                 $file = File::where('id', $request->input('file_id'))->first();
                 $physicalName = File::find($file->id)->physicalName;
                 $name = File::find($file->id)->name;
-                //return response()->json([
-                //'physicalName' => File::find($file->id)->physicalName
-                //]);
+                $path=storage_path('/app/files/'.$physicalName);
+                if (file_exists($path)){
+                    $headers = [
+                        'Content-Type' => $file->format,
+                    ];
 
-                //return Storage::download('files/'.$physicalName, $name, '');
+                    return response()->download($path,$name,$headers);
+                }
+                else{
+                    return response()->json([
+                        'code' => 404,
+                        'status' => 'Not Found!'
+                    ]);
+                }
 
-                $path = storage_path('files/'.$physicalName);
-                return Response()->download($path);
             } else {
                 return response()->json([
-                    'code' => 404,
-                    'status' => 'Not Found!'
+                    'code' => 403,
+                    'status' => 'Access denied'
                 ]);
             }
         } catch(Exception $ex){
