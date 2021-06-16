@@ -18,7 +18,7 @@ class UserController extends Controller
                 'email' => $request->input('email'),
                 'password' => $request->input('password'),
                 'phone' => $request->input('phone'),
-                'wallet' => '0'
+                'wallet' => '50000'
             ];
 
             $users = User::where('email', '=', $request->input('email'))->first();

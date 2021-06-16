@@ -95,6 +95,13 @@ class FileController extends Controller
     public function register(Request $request){
         try {
             $user = User::where('remember_token', $request->input('token'))->first();
+            $fileRegister = FileRegister::where('user_id', $user->id)->where('file_id', $request->input('file_id'))->first();
+            if ($fileRegister instanceof FileRegister){
+                return response()->json([
+                    'code' => 409,
+                    'status' => 'register done'
+                ]);
+            }
             $file = File::where('id', $request->input('file_id'))->first();
             $author = User::where('id', $file->author_id)->first();
             if ($file->price > $user->wallet) {
