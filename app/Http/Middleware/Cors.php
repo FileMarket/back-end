@@ -23,9 +23,9 @@ class Cors
 
         if(method_exists($handle, 'header'))
         {
-            $handle->header('Access-Control-Allow-Origin' , '*')
+            $handle->header('Access-Control-Allow-Origin' , 'http://localhost:3000')
                 ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
-                ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application');
+                ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, X-Auth-Token, Authorization, Origin, Access-Control-Allow-Headers, X-Requested-With, Application');
         }
 
         return $handle;
