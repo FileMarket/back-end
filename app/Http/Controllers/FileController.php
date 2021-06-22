@@ -36,6 +36,12 @@ class FileController extends Controller
             $request->file('file')->storeAs('files', $physicalName);
 
             if ($file instanceof File) {
+                $newfileRegister = [
+                    'file_id' => $file->id,
+                    'user_id' => $user->id,
+                    'price' => 0,
+                ];
+                FileRegister::create($newfileRegister);
                 return response()->json([
                     'code' => 200,
                     'status' => 'OK'
